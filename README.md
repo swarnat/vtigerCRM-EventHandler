@@ -48,13 +48,15 @@ $list_query = $queryGenerator->getQuery();
 **Insert before:**  
 ```php
 /** Additional Event Triggers by swarnat START*/
-  if(class_exists("SWEventHandler")) $queryGenerator = SWEventHandler::do_filter("vtiger.filter.listview.querygenerator.before", $queryGenerator);
+  if(class_exists("SWEventHandler")) 
+    $queryGenerator = SWEventHandler::do_filter("vtiger.filter.listview.querygenerator.before", $queryGenerator);
 /** Additional Event Triggers by swarnat END */
 ```
 **AND Insert After:**  
 ```php
 /** Additional Event Triggers by swarnat START*/
-  if(class_exists("SWEventHandler")) $queryGenerator = SWEventHandler::do_filter("vtiger.filter.listview.querygenerator.after", $queryGenerator);
+  if(class_exists("SWEventHandler")) 
+    $queryGenerator = SWEventHandler::do_filter("vtiger.filter.listview.querygenerator.after", $queryGenerator);
 /** Additional Event Triggers by swarnat END */
 ```
 
@@ -67,7 +69,8 @@ $data[$recordId] = $row;
 **Insert before:**  
 ```php
 /** Additional Event Triggers by swarnat START*/
-  if(class_exists("SWEventHandler")) list($row, $unused, $unused2) = SWEventHandler::do_filter("vtiger.filter.listview.render", array($row, $this->db->fetchByAssoc($result, $i), $recordId));
+  if(class_exists("SWEventHandler")) 
+    list($row, $unused, $unused2) = SWEventHandler::do_filter("vtiger.filter.listview.render", array($row, $this->db->fetchByAssoc($result, $i), $recordId));
 /** Additional Event Triggers by swarnat END */
 ```
 ###### Open: modules/Vtiger/footer.php  
@@ -79,7 +82,8 @@ global $app_strings;
 **Add after:**  
 ```php
 /** Additional Event Triggers by swarnat START*/
-  if(class_exists("SWEventHandler")) SWEventHandler::do_action("vtiger.footer");
+  if(class_exists("SWEventHandler")) 
+    SWEventHandler::do_action("vtiger.footer");
 /** Additional Event Triggers by swarnat END */
 ```
 ###### Open: modules/Vtiger/header.php
@@ -91,6 +95,7 @@ $smarty->display("Header.tpl");
 **add After:**  
 ```php
 /** Additional Event Triggers by swarnat START*/
-  if(class_exists("SWEventHandler")) SWEventHandler::do_action("vtiger.header");
+  if(class_exists("SWEventHandler")) 
+    SWEventHandler::do_action("vtiger.header");
 /** Additional Event Triggers by swarnat END */
 ```
