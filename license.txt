@@ -1,0 +1,17 @@
+################################################
+#
+# EventHandler
+#
+# Version: 1.0
+# Author: Stefan Warnat <support@stefanwarnat.de>
+# Website: http://vtiger.stefanwarnat.de
+# 
+################################################
+
+
+
+CHANGELOG
+
+### 1.0
+   - initial release
+ 
