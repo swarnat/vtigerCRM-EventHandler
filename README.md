@@ -57,7 +57,11 @@ $list_query = $queryGenerator->getQuery();
 /** Additional Event Triggers by swarnat START*/
   if(class_exists("SWEventHandler")) 
     $queryGenerator = SWEventHandler::do_filter("vtiger.filter.listview.querygenerator.after", $queryGenerator);
+
+	if(class_exists("SWEventHandler"))
+      $list_query = SWEventHandler::do_filter("vtiger.filter.listview.querygenerator.query", $list_query);
 /** Additional Event Triggers by swarnat END */
+
 ```
 
 ###### Open: include/ListView/ListViewController.php  
@@ -70,9 +74,23 @@ $data[$recordId] = $row;
 ```php
 /** Additional Event Triggers by swarnat START*/
   if(class_exists("SWEventHandler")) 
-    list($row, $unused, $unused2) = SWEventHandler::do_filter("vtiger.filter.listview.render", array($row, $this->db->fetchByAssoc($result, $i), $recordId));
+    list($row, $unused, $unused2) = SWEventHandler::do_filter("vtiger.filter.listview.render", array($row, $this->db->query_result_rowdata($result, $i), $recordId));
 /** Additional Event Triggers by swarnat END */
 ```
+
+**Search:**  
+```php
+return $header;
+```
+**Insert before:**  
+```php
+/** Additional Event Triggers by swarnat START*/
+  if(class_exists("SWEventHandler")) 
+    $header = SWEventHandler::do_filter("vtiger.filter.listview.header", $header);
+/** Additional Event Triggers by swarnat END */
+```
+
+
 ###### Open: modules/Vtiger/footer.php  
 
 **Search:**  
