@@ -90,6 +90,48 @@ return $header;
 /** Additional Event Triggers by swarnat END */
 ```
 
+###### Open: modules/CustomView/CustomView.php
+
+This Filter **listview.filter.show** could filter the CustomViews which will be shown.
+
+**Search:**
+```php
+if ($cvrow['viewname'] == 'All') {
+```
+
+**Insert before:**
+```php
+	/** Additional Event Triggers by swarnat START*/
+	/** Should the filter shown?  */
+	if($cvrow['viewname'] != "All") {
+		list($return, $tmp) = SWEventHandler::do_filter("listview.filter.show", array(true, $cvrow));
+		if($return == false) {
+			continue;
+		}
+	}
+	/** Additional Event Triggers by swarnat END */
+```
+
+###### Open: vtlib/Vtiger/Link.php
+
+This Filter **link.filter.show** could filter the widgets which will be shown.
+
+**Search:**
+```php
+$instance = new self();
+```
+
+**Insert before:**
+```php
+	/** Additional Event Triggers by swarnat START*/
+	/** Should the widget be shown */
+	list($return, $tmp) = SWEventHandler::do_filter("link.filter.show", array(true, $row, $type, $parameters));
+	if($return == false) {
+		continue;
+	}
+	/** Additional Event Triggers by swarnat END */
+```
+
 
 ###### Open: modules/Vtiger/footer.php  
 

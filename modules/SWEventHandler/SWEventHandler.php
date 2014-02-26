@@ -14,6 +14,8 @@ class SWEventHandler
     protected static $Counter = 0;
     protected static $CounterInternal = 0;
 
+    protected static $numCounter = array(0, 0);
+
     protected static function _loadFilterCache($filtername) {
         global $adb;
         $query = "SELECT handler_path, handler_class FROM vtiger_eventhandlers WHERE is_active=true AND event_name = ?";
@@ -30,12 +32,13 @@ class SWEventHandler
 
     public static function do_action($eventName, $parameter = false) {
         $startTime = microtime(true);
+        self::$numCounter[0]++;
 
         // if vtiger.footer Action is called, output the timings for admins
         if($eventName == "vtiger.footer") {
             global $current_user;
             if($current_user->is_admin == "on") {
-                echo "<div style='text-align:left;font-size:11px;padding:0 30px;color:rgb(153, 153, 153);'>Event processing <span title='total time the EventHandler was active' alt='total time the EventHandler was active'>".round(self::$Counter*1000, 1)."</span> / <span title='time Events used internal' alt='time Events used internal'>".round(self::$CounterInternal*1000, 1)." msec</div>";
+                echo "<div style='text-align:left;font-size:11px;padding:0 30px;color:rgb(153, 153, 153);'>Event processing <span title='total time the EventHandler was active' alt='total time the EventHandler was active'>".round(self::$Counter*1000, 1)."</span> / <span title='time Events used internal' alt='time Events used internal'>".round(self::$CounterInternal*1000, 1)." msec (".self::$numCounter[0]." Actions / ".self::$numCounter[1]." Filter)</div>";
             }
         }
 
@@ -68,6 +71,8 @@ class SWEventHandler
         }
 
         foreach(self::$_filterCache[$filtername] as $filter) {
+            self::$numCounter[1]++;
+
             // if not used before this, create the Handler Class
             if(!isset(self::$_objectCache[$filter["handler_path"]."/".$filter["handler_class"]])) {
                 require_once($filter["handler_path"]);
