@@ -1,4 +1,4 @@
-vtigerCRM-EventHandler
+vtigerCRM 6-EventHandler
 ======================
 
 This Extension will implement an improved Version of Eventhandling in vtigerCRM 6.  
