@@ -2,16 +2,33 @@
 #
 # EventHandler
 #
-# Version: 1.0
+# Version: 600.0101
 # Author: Stefan Warnat <support@stefanwarnat.de>
 # Website: http://vtiger.stefanwarnat.de
 # 
 ################################################
 
+LICENSE
+1. The EventHandler License will be referred to as "The license" in the remainder of this text.
 
+2. This irrevocable, perpetual license covers versions 600.x of EventHandler.
 
-CHANGELOG
+3. The license holder is allowed to make modifications to the EventHandler sources but in no event 
+   will the original copyright holders of this library be held responsible 
+   for action or actions resulting from any modifications of the source.
 
-### 1.0
-   - initial release
- 
+4. The license holder is not required to publicize or otherwise make available any software used in conjunction with EventHandler.
+
+5. The license holder may not re-distribute the library on it's own or versions thereof to third party without prior written permission of the copyright holder.
+
+6. EventHandler License does allow the library to be redistributed as part of another product only with prior written permission of the copyright holder.
+
+7. The license may be transferred to another server by removing all installed files from the old server.
+
+8. This license gives the holder right to install the EventHandler extension on ONE productive vtigerCRM System + ONE testing vtigerCRM System.
+
+9. The wording of this license may change without notice for future versions of EventHandler.
+
+10.For licensecheck the version of your vtigerCRM and the unreadable hashed hostname with IP of your CRM will be transmitted to the server of the author. 
+   This data will by used only for this operation and must be saved for two months after activation to prevent illegal activations.
+
