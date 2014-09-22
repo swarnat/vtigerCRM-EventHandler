@@ -57,7 +57,7 @@ $this->set(
 	)
 );
 
-$listQuery = EventHandler_Module_Model::filter("vtiger.filter.listview.querygenerator.query", $listQuery, $this->get('query_generator'));
+$listQuery = EventHandler_Module_Model::do_filter("vtiger.filter.listview.querygenerator.query", $listQuery, $this->get('query_generator'));
 /** EventHandler ENDE */
 ```
 
