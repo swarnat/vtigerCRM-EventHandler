@@ -107,10 +107,10 @@ list($handler, $request) = EventHandler_Module_Model::do_filter(
 ```php
 $viewer->view('Footer.tpl');
 ```	
-+**Insert before:**
+**Insert before:**
 ```php
 /** EventHandler START */
-$return = EventHandler_Module_Model::do_action("vtiger.footer.after");
+$return = EventHandler_Module_Model::do_action("vtiger.footer.before");
 if($return === false) { return; }
 /** EventHandler ENDE */
 ```
