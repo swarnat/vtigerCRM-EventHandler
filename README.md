@@ -131,7 +131,7 @@ return $instance->setData($focus->column_fields)->setModule($moduleName)->setEnt
 **Insert before:**
 ```php
 /** EventHandler START */
-$focus->column_fields = EventHandler::filter('vtiger.filter.record.getclean', $focus->column_fields, $moduleName);
+$focus->column_fields = EventHandler_Module_Model::do_filter('vtiger.filter.record.getclean', $focus->column_fields, $moduleName);
 /** EventHandler ENDE */
 ```
 
