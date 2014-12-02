@@ -34,6 +34,8 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter1, [$param
 ```php
 $listQuery = $this->getQuery();
 ```
+Use the one inside the function **getListViewEntries** around Line 200!
+
 **Insert Before:**
 ```php
 /** EventHandler START */
