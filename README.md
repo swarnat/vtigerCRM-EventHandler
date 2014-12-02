@@ -121,3 +121,29 @@ if($return === false) { return; }
 EventHandler_Module_Model::do_action("vtiger.footer.after");
 /** EventHandler ENDE */
 ```
+
+###### Open: modules/Vtiger/models/Record.php
+
+**Search:**
+```php
+return $instance->setData($focus->column_fields)->setModule($moduleName)->setEntity($focus);
+```	
+**Insert before:**
+```php
+/** EventHandler START */
+$focus->column_fields = EventHandler::filter('vtiger.filter.record.getclean', $focus->column_fields, $moduleName);
+/** EventHandler ENDE */
+```
+
+###### Open: modules/Inventory/views/Edit.php
+
+**Search:**
+```php
+$recordModel->setRecordFieldValues($parentRecordModel);
+```	
+**Insert after:**
+```php
+/** EventHandler START */
+$recordModel = EventHandler_Module_Model::do_filter('vtiger.filter.'.strtolower($moduleName).'.convert', $recordModel, $parentRecordModel);
+/** EventHandler ENDE */
+```

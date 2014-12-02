@@ -38,20 +38,24 @@ if(!class_exists("EventHandler", false)) {
             self::$_eventManager->triggerEvent($eventName, $parameter);
         }
 
-        public static function filter($filtername, $parameter) {
+        public static function filter($filtername) {
             global $adb;
 
             $query = "SELECT * FROM vtiger_eventhandlers WHERE is_active=true AND event_name = ?";
             $result = $adb->pquery($query, array($filtername));
 
+            $args = func_get_args();
+            array_unshift($args, $filtername);
+
             while($filter = $adb->fetchByAssoc($result)) {
                 require_once($filter["handler_path"]);
                 $className = $filter["handler_class"];
                 $obj = new $className();
-                $parameter = $obj->handleFilter($filtername, $parameter);
+
+                $args[1] = call_user_func_array(array($obj, 'handleFilter'), $args);
             }
 
-            return $parameter;
+            return $args[1];
         }
 
 

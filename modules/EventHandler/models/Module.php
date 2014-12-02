@@ -68,7 +68,7 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
         self::$CounterInternal += (microtime(true) - $startTime2);
     }
 
-    public static function do_filter($filtername, $parameter) {
+    public static function do_filter($filtername) {
         $startTime = microtime(true);
         global $adb;
 
@@ -99,7 +99,7 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
 
         self::$Counter += (microtime(true) - $startTime);
 
-        return $parameter;
+        return $extra[1];
     }
 
 }
