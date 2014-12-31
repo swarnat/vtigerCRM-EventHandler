@@ -44,7 +44,7 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parame
 
 ###### 2.1 Open: modules/Vtiger/models/ListView.php
 
-** 2.1.1 Search:**  
+**2.1.1 Search:**  
 ```php
 $listQuery = $this->getQuery();
 ```
@@ -83,7 +83,7 @@ Use the one inside the function **getListViewEntries** around Line 200!
 	$listQuery = EventHandler_Module_Model::do_filter("vtiger.filter.listview.querygenerator.query", $listQuery, $this->get('query_generator'));/** EventHandler ENDE */
 ```
 
-** 2.1.2 Search:**
+**2.1.2 Search:**
 ```php
 return $listViewRecordModels;
 ```
@@ -119,9 +119,9 @@ $listViewRecordModels = EventHandler_Module_Model::do_filter(
 	/** EventHandler ENDE */
 ```	
 
-###### 2.2 Open: modules/Vtiger/models/Record.php
+######2.2 Open: modules/Vtiger/models/Record.php
 
-** 2.2.1 Search:**
+**2.2.1 Search:**
 ```php
 return $instance->setData($focus->column_fields)->setModule($moduleName)->setEntity($focus);
 ```	
@@ -132,7 +132,7 @@ $focus->column_fields = EventHandler_Module_Model::do_filter('vtiger.filter.reco
 /** EventHandler ENDE */
 ```
 
-###### 2.3 Open: modules/Inventory/views/Edit.php
+######2.3 Open: modules/Inventory/views/Edit.php
 
 ** 2.3.1 Search:**
 ```php
