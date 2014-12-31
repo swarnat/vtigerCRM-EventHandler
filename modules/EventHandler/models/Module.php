@@ -9,6 +9,7 @@
  *************************************************************************************/
 
 class EventHandler_Module_Model extends Vtiger_Module_Model{
+    protected static $DEBUG = true;
 
 	/**
 	 * Function to get the Quick Links for the module
@@ -28,17 +29,34 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
     protected static $Counter = 0;
     protected static $CounterInternal = 0;
 
-    protected static function _loadFilterCache($filtername) {
-        global $adb;
-        $query = "SELECT handler_path, handler_class FROM vtiger_eventhandlers WHERE is_active=true AND event_name = ?";
-        $result = $adb->pquery($query, array($filtername));
+    protected static $DEBUGCOUNTER = array('core' => array(), 'actions' => array(), 'filter' => array());
 
-        if(!isset(self::$_filterCache[$filtername])) {
-            self::$_filterCache[$filtername] = array();
+    /**
+     * @param array $filtername
+     */
+    protected static function _loadFilterCache() {
+        global $adb;
+        if(self::$DEBUG === true) {
+            $startTime = microtime(true);
         }
 
+        if(self::$_filterCache !== false) {
+            return;
+        }
+
+        $query = "SELECT handler_path, handler_class, event_name FROM vtiger_eventhandlers WHERE is_active=true";// AND event_name IN (".generateQuestionMarks($tmpFilterlist).')';
+        $result = $adb->query($query);
+
         while($filter = $adb->fetchByAssoc($result)) {
-            self::$_filterCache[$filtername][] = $filter;
+            if(!isset(self::$_filterCache[$filter['event_name']])) {
+                self::$_filterCache[$filter['event_name']] = array();
+            }
+
+            self::$_filterCache[$filter['event_name']][] = $filter;
+        }
+
+        if(self::$DEBUG === true) {
+            self::$DEBUGCOUNTER['core']['_loadFilterCache'][] = round((microtime(true) - $startTime) * 1000, 2).'ms';
         }
     }
 
@@ -46,10 +64,27 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
         $startTime = microtime(true);
 
         // if vtiger.footer Action is called, output the timings for admins
-        if($eventName == "vtiger.footer.after") {
-            global $current_user;
-            if($current_user->is_admin == "on") {
-                echo "<div class='vtFooter' style='font-size:11px;padding:0 30px;color:rgb(153, 153, 153);'>Event processing <span title='total time the EventHandler was active' alt='total time the EventHandler was active'>".round(self::$Counter*1000, 1)."</span> / <span title='time Events used internal' alt='time Events used internal'>".round(self::$CounterInternal*1000, 1)." msec</div>";
+        if($eventName == "vtiger.process.finish") {
+            $headers = headers_list();
+            $isJSON = false;
+            foreach($headers as $header) {
+                if(strpos($header, 'text/json') !== false) {
+                    $isJSON = true;
+                    break;
+                }
+            }
+
+            if($isJSON === false) {
+                global $current_user;
+                if($current_user->is_admin == "on") {
+    //                echo "<div class='vtFooter' style='font-size:11px;padding:0 30px;color:rgb(153, 153, 153);'>Event processing <span title='total time the EventHandlerCore was active' alt='total time the EventHandlerCore was active'>".round(self::$Counter*1000, 1)."</span> / <span title='time Events used internal' alt='time Events used internal'>".round(self::$CounterInternal*1000, 1)." msec</div>";
+                    echo "<script type='text/javascript'>console.log('EventHandler: total time the EventHandlerCore was active (ms)', ".round(self::$Counter*1000, 1)."); console.log('EventHandler: time Events used internal (ms)', ".round(self::$CounterInternal*1000, 1).");</script>";
+                    if(self::$DEBUG === true) {
+                        echo '<script type="text/javascript">console.log('.json_encode(self::$DEBUGCOUNTER).');</script>';
+    //                    header('EventHandlerCore:'.round(self::$Counter*1000, 1).'ms');
+    //                    header('EventHandlerEvents:'.round(self::$CounterInternal*1000, 1).'ms');
+                    }
+                }
             }
         }
 
@@ -64,40 +99,63 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
 
         self::$_eventManager->triggerEvent($eventName, $parameter);
 
-        self::$Counter += (microtime(true) - $startTime);
-        self::$CounterInternal += (microtime(true) - $startTime2);
+        $duration = (microtime(true) - $startTime2);
+        self::$CounterInternal += $duration;
+        self::$Counter += (microtime(true) - $startTime) - $duration;
+
+        if(self::$DEBUG === true) {
+            $duration = round((microtime(true) - $startTime2) * 1000, 4);
+            self::$DEBUGCOUNTER['actions'][$eventName][] = $duration . 'ms';
+        }
     }
 
-    public static function do_filter($filtername) {
+    public static function do_filter($filternames) {
         $startTime = microtime(true);
+        $duration = 0;
         global $adb;
 
+        if(!is_array($filternames)) {
+            $filternames = array($filternames);
+        }
+
         // load the Cache for this Filter
-        if(self::$_filterCache === false || !isset(self::$_filterCache[$filtername])) {
-            self::_loadFilterCache($filtername);
+        if(self::$_filterCache === false) {
+            self::_loadFilterCache();
         }
 
         $extra = func_get_args();
 
-        foreach(self::$_filterCache[$filtername] as $filter) {
-            if(!isset(self::$_objectCache[$filter["handler_path"]."/".$filter["handler_class"]])) {
-                require_once($filter["handler_path"]);
-
-                $className = $filter["handler_class"];
-                self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]] = new $className();
+        foreach($filternames as $filtername) {
+            if(self::$DEBUG === true) {
+                self::$DEBUGCOUNTER['core']['done'][] = $filtername;
             }
+            foreach(self::$_filterCache[$filtername] as $filter) {
+                if(!isset(self::$_objectCache[$filter["handler_path"]."/".$filter["handler_class"]])) {
+                    require_once($filter["handler_path"]);
 
-            $obj = self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]];
+                    $className = $filter["handler_class"];
+                    self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]] = new $className();
+                }
 
-            $startTime2 = microtime(true);
+                $obj = self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]];
 
-            $extra[1] = call_user_func_array(array($obj, 'handleFilter'), $extra);
+                $startTime2 = microtime(true);
 
-            self::$CounterInternal += (microtime(true) - $startTime2);
-            // $parameter = $obj->handleFilter($filtername, $parameter);
+                $extra[0] = $filtername;
+                $extra[1] = call_user_func_array(array($obj, 'handleFilter'), $extra);
+
+                self::$CounterInternal += (microtime(true) - $startTime2);
+                $duration += (microtime(true) - $startTime2);
+
+                if(self::$DEBUG === true) {
+                    $durationDebug = round((microtime(true) - $startTime2) * 1000, 4);
+                    self::$DEBUGCOUNTER['filter'][$filtername][$filter["handler_class"]] =  $durationDebug . 'ms';
+                }
+                // $parameter = $obj->handleFilter($filtername, $parameter);
+            }
         }
 
-        self::$Counter += (microtime(true) - $startTime);
+        self::$Counter += (microtime(true) - $startTime) - $duration;
 
         return $extra[1];
     }
