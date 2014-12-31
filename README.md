@@ -27,14 +27,14 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parame
 ## Changelog
 
 **600.0201 (2014-12-31)**
-	- Modify Insertion 2.4.1 into *includes/main/WebUI.php*. **Please check the corresponding file**
-	- Increase the Performance for handling of many Filter/Actions
-	- *Added Actions:* vtiger.process.finish
-	- *Added Filters:* vtiger.filter.detailview.record, $sortOrder = $this->getForSql('sortorder');
-	- *Added Code Insertions*: 2.6, 2.4.2, 2.1.3
+ - Modify Insertion 2.4.1 into *includes/main/WebUI.php*. **Please check the corresponding file**
+ - Increase the Performance for handling of many Filter/Actions
+ - *Added Actions:* vtiger.process.finish
+ - *Added Filters:* vtiger.filter.detailview.record, $sortOrder = $this->getForSql('sortorder');
+ - *Added Code Insertions*: 2.6, 2.4.2, 2.1.3
 	
 **600.0101 (2013-12-16)**
-	- first public Release for VtigerCRM 6
+ - first public Release for VtigerCRM 6
 
 
 ======================
