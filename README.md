@@ -97,7 +97,7 @@ $listViewRecordModels = EventHandler_Module_Model::do_filter(
 );
 /** EventHandler ENDE */
 ```	
-** 2.1.3 Search:**
+**2.1.3 Search:**
 ```php
 	$sortOrder = $this->getForSql('sortorder');
 ```
@@ -147,7 +147,7 @@ $recordModel = EventHandler_Module_Model::do_filter('vtiger.filter.'.strtolower(
 
 ###### 2.4 Open: includes/main/WebUI.php
 
-** 2.4.1 Search: **
+**2.4.1 Search: **
 ```php	
 $response = $handler->process($request);
 ```
@@ -176,7 +176,7 @@ $response = $handler->process($request);
 /** EventHandler ENDE */
 ```
 
-** 2.4.2. Search: **
+**2.4.2. Search: **
 ```php
 	if ($response) {
 		$response->emit();
@@ -191,7 +191,7 @@ $response = $handler->process($request);
 
 ###### 2.5 Open: includes/runtime/Controller.php
 
-** 2.5.1 Search:**
+**2.5.1 Search:**
 ```php
 $viewer->view('Footer.tpl');
 ```	
@@ -211,7 +211,7 @@ EventHandler_Module_Model::do_action("vtiger.footer.after");
 ```
 ###### 2.6 Open: modules/Vtiger/models/DetailView.php
 
-** 2.6.1 Search
+**2.6.1 Search
 ```php
 $this->record = $recordModuleInstance;
 ```
