@@ -27,11 +27,11 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parame
 ## Changelog
 
 **600.0201 (2014-12-31)**
- - Modify Insertion 2.4.1 into *includes/main/WebUI.php*. **Please check the corresponding file**
  - Increase the Performance for handling of many Filter/Actions
  - *Added Actions:* vtiger.process.finish
  - *Added Filters:* vtiger.filter.detailview.record, $sortOrder = $this->getForSql('sortorder');
  - *Added Code Insertions*: 2.6, 2.4.2, 2.1.3
+ - Modify Insertion 2.4.1, 2.1.1, 2.1.3. **Please check the corresponding files**
 	
 **600.0101 (2013-12-16)**
  - first public Release for VtigerCRM 6
@@ -134,7 +134,7 @@ $focus->column_fields = EventHandler_Module_Model::do_filter('vtiger.filter.reco
 
 ######2.3 Open: modules/Inventory/views/Edit.php
 
-** 2.3.1 Search:**
+**2.3.1 Search:**
 ```php
 $recordModel->setRecordFieldValues($parentRecordModel);
 ```	
