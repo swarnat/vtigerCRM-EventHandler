@@ -2,7 +2,7 @@
 <module>
 	<type>extension</type>
 	<name>EventHandler</name>
-	<version>600.0101</version>
+	<version>600.0102</version>
 	<dependencies>
 	  <vtiger_version>6.0.0</vtiger_version> 
 	</dependencies>

@@ -129,29 +129,31 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
             if(self::$DEBUG === true) {
                 self::$DEBUGCOUNTER['core']['done'][] = $filtername;
             }
-            foreach(self::$_filterCache[$filtername] as $filter) {
-                if(!isset(self::$_objectCache[$filter["handler_path"]."/".$filter["handler_class"]])) {
-                    require_once($filter["handler_path"]);
+            if(is_array(self::$_filterCache[$filtername])) {
+                foreach(self::$_filterCache[$filtername] as $filter) {
+                    if(!isset(self::$_objectCache[$filter["handler_path"]."/".$filter["handler_class"]])) {
+                        require_once($filter["handler_path"]);
 
-                    $className = $filter["handler_class"];
-                    self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]] = new $className();
+                        $className = $filter["handler_class"];
+                        self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]] = new $className();
+                    }
+
+                    $obj = self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]];
+
+                    $startTime2 = microtime(true);
+
+                    $extra[0] = $filtername;
+                    $extra[1] = call_user_func_array(array($obj, 'handleFilter'), $extra);
+
+                    self::$CounterInternal += (microtime(true) - $startTime2);
+                    $duration += (microtime(true) - $startTime2);
+
+                    if(self::$DEBUG === true) {
+                        $durationDebug = round((microtime(true) - $startTime2) * 1000, 4);
+                        self::$DEBUGCOUNTER['filter'][$filtername][$filter["handler_class"]] =  $durationDebug . 'ms';
+                    }
+                    // $parameter = $obj->handleFilter($filtername, $parameter);
                 }
-
-                $obj = self::$_objectCache[$filter["handler_path"]."#".$filter["handler_class"]];
-
-                $startTime2 = microtime(true);
-
-                $extra[0] = $filtername;
-                $extra[1] = call_user_func_array(array($obj, 'handleFilter'), $extra);
-
-                self::$CounterInternal += (microtime(true) - $startTime2);
-                $duration += (microtime(true) - $startTime2);
-
-                if(self::$DEBUG === true) {
-                    $durationDebug = round((microtime(true) - $startTime2) * 1000, 4);
-                    self::$DEBUGCOUNTER['filter'][$filtername][$filter["handler_class"]] =  $durationDebug . 'ms';
-                }
-                // $parameter = $obj->handleFilter($filtername, $parameter);
             }
         }
 
