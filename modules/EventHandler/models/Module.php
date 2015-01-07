@@ -9,7 +9,7 @@
  *************************************************************************************/
 
 class EventHandler_Module_Model extends Vtiger_Module_Model{
-    protected static $DEBUG = true;
+    protected static $DEBUG = false;
 
 	/**
 	 * Function to get the Quick Links for the module
