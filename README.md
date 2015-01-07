@@ -1,6 +1,8 @@
 vtigerCRM-EventHandler
 ======================
 
+**For the Version of VtigerCRM 6.x please switch to Branch vtiger6.**
+
 This Extension will implement a improved Version of Eventhandling in vtigerCRM 5.40.  
 **It isn't compatible to earlier/later vtigerCRM versions!**
 
