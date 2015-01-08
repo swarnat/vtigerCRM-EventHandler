@@ -28,7 +28,8 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parame
 
 **2014-01-08**
  - Modify Insertion 2.4.2. **Please check the corresponding files**
- **600.0102 (2014-12-31)**
+
+**600.0102 (2014-12-31)**
  - Increase the Performance for handling of many Filter/Actions
  - *Added Actions:* vtiger.process.finish
  - *Added Filters:* vtiger.filter.detailview.record, $sortOrder = $this->getForSql('sortorder');
