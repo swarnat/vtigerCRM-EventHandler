@@ -26,7 +26,9 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parame
 ======================
 ## Changelog
 
-**600.0201 (2014-12-31)**
+**2014-01-08**
+ - Modify Insertion 2.4.2. **Please check the corresponding files**
+ **600.0102 (2014-12-31)**
  - Increase the Performance for handling of many Filter/Actions
  - *Added Actions:* vtiger.process.finish
  - *Added Filters:* vtiger.filter.detailview.record, $sortOrder = $this->getForSql('sortorder');
@@ -147,7 +149,7 @@ $recordModel = EventHandler_Module_Model::do_filter('vtiger.filter.'.strtolower(
 
 ###### 2.4 Open: includes/main/WebUI.php
 
-**2.4.1 Search: **
+**2.4.1 Search:**
 ```php	
 $response = $handler->process($request);
 ```
@@ -186,6 +188,7 @@ $response = $handler->process($request);
 ```php
 	/** EventHandler START */
 	EventHandler_Module_Model::do_action("vtiger.process.finish", array($module, $componentName, $componentType));
+	EventHandler_Module_Model::do_action("vtiger.process.".strtolower($module.'.'.$componentName.".".$componentType).".finish", array($module, $componentName, $componentType));
 	/** EventHandler ENDE */
 ```
 
