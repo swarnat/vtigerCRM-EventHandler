@@ -67,19 +67,25 @@ class EventHandler_Module_Model extends Vtiger_Module_Model{
         if($eventName == "vtiger.process.finish") {
             $headers = headers_list();
             $isJSON = false;
+
             foreach($headers as $header) {
-                if(strpos($header, 'text/json') !== false) {
-                    $isJSON = true;
+                if(strpos(strtolower($header), 'content-type') !== false) {
+                    if(strpos($header, 'text/html') !== false) {
+                        $isJSON = false;
+                    } else {
+                        $isJSON = true;
+                    }
                     break;
                 }
             }
+
 
             if($isJSON === false) {
                 global $current_user;
                 if($current_user->is_admin == "on") {
     //                echo "<div class='vtFooter' style='font-size:11px;padding:0 30px;color:rgb(153, 153, 153);'>Event processing <span title='total time the EventHandlerCore was active' alt='total time the EventHandlerCore was active'>".round(self::$Counter*1000, 1)."</span> / <span title='time Events used internal' alt='time Events used internal'>".round(self::$CounterInternal*1000, 1)." msec</div>";
-                    echo "<script type='text/javascript'>console.log('EventHandler: total time the EventHandlerCore was active (ms)', ".round(self::$Counter*1000, 1)."); console.log('EventHandler: time Events used internal (ms)', ".round(self::$CounterInternal*1000, 1).");</script>";
                     if(self::$DEBUG === true) {
+                        echo "<script type='text/javascript'>console.log('EventHandler: total time the EventHandlerCore was active (ms)', ".round(self::$Counter*1000, 1)."); console.log('EventHandler: time Events used internal (ms)', ".round(self::$CounterInternal*1000, 1).");</script>";
                         echo '<script type="text/javascript">console.log('.json_encode(self::$DEBUGCOUNTER).');</script>';
     //                    header('EventHandlerCore:'.round(self::$Counter*1000, 1).'ms');
     //                    header('EventHandlerEvents:'.round(self::$CounterInternal*1000, 1).'ms');
