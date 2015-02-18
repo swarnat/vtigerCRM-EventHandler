@@ -26,8 +26,18 @@ For Actions there has to be a **"handleEvent($handlerType, $parameter)"** functi
 For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parameter2], ...)"** function, which will return the new $parameter value.  
 
 ======================
+## Features
+With different of the modification below you could reach different things.
+
+**If you whould only use this module with the Colorizer, you only need to apply 2.1, 2.4, 2.5, 2.6**
+
+======================
 ## Changelog
 
+**2015-02-13**
+ - Add Insert: 2.7, 
+ - Apply 2.1 also to modules/Products/models/ListView.php
+ 
 **2014-01-08**
  - Modify Insertion 2.4.2. **Please check the corresponding files**
 
@@ -48,6 +58,8 @@ For Filters there has to be a **"handleFilter($handlerType, $parameter, [$parame
 ###### 1. Install this Extension with ModuleManager
 
 ###### 2.1 Open: modules/Vtiger/models/ListView.php
+
+**Modify this also in modules/Products/models/ListView.php!**
 
 **2.1.1 Search:**  
 ```php
@@ -225,3 +237,29 @@ $this->record = $recordModuleInstance;
 ```php
 $recordModuleInstance = EventHandler_Module_Model::do_filter('vtiger.filter.detailview.record', $recordModuleInstance);
 ```
+###### 2.7 Open: modules\Users\models\Privileges.php
+
+**2.7.1 Search
+```php
+public static function isPermitted($moduleName, $actionName, $record=false) {
+```
+** Insert after: **
+```php
+        /** EventHandler START */
+       	$permission = EventHandler_Module_Model::do_filter(
+       		array(
+       			'vtiger.filter.permission',
+       			'vtiger.filter.permission.'.strtolower($moduleName),
+       			'vtiger.filter.permission.'.strtolower($moduleName).'.'.strtolower($actionName),
+       		),
+       		null,
+            $moduleName,
+            $actionName,
+           $record
+       	);
+        if($permission !== null) {
+            return $permission;
+        }
+       	/** EventHandler ENDE */
+```
+
