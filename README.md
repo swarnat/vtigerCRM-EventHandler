@@ -59,7 +59,7 @@ With different of the modification below you could reach different things.
 
 ###### 2.1 Open: modules/Vtiger/models/ListView.php
 
-**Modify this also in modules/Products/models/ListView.php!**
+**Modify this also in modules/Products/models/ListView.php to get functions in Products module!**
 
 **2.1.1 Search:**  
 ```php
