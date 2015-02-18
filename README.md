@@ -193,7 +193,7 @@ $response = $handler->process($request);
 /** EventHandler ENDE */
 ```
 
-**2.4.2. Search: **
+**2.4.2. Search:**
 ```php
 	if ($response) {
 		$response->emit();
@@ -239,11 +239,11 @@ $recordModuleInstance = EventHandler_Module_Model::do_filter('vtiger.filter.deta
 ```
 ###### 2.7 Open: modules\Users\models\Privileges.php
 
-**2.7.1 Search
+**2.7.1 Search**
 ```php
 public static function isPermitted($moduleName, $actionName, $record=false) {
 ```
-** Insert after: **
+**Insert after:**
 ```php
         /** EventHandler START */
        	$permission = EventHandler_Module_Model::do_filter(
