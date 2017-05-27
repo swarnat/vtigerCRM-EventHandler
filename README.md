@@ -1,4 +1,4 @@
-vtigerCRM 6 - EventHandler
+vtigerCRM 7 - EventHandler
 ======================
 
 **Compatible with VtigerCRM 7**
