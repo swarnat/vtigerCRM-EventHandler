@@ -2,7 +2,7 @@
 #
 # EventHandler
 #
-# Version: 7.01
+# Version: 7.01.01
 # Author: Redoo Networks GMbH
 # Website: http://www.redoo-networks.com
 # 
