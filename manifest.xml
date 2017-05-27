@@ -4,6 +4,6 @@
 	<name>EventHandler</name>
 	<version>600.0103</version>
 	<dependencies>
-	  <vtiger_version>6.0.0</vtiger_version> 
+	  <vtiger_version>7.0.0</vtiger_version> 
 	</dependencies>
 </module>

@@ -2,16 +2,16 @@
 #
 # EventHandler
 #
-# Version: 600.0101
-# Author: Stefan Warnat <support@stefanwarnat.de>
-# Website: http://vtiger.stefanwarnat.de
+# Version: 7.01
+# Author: Redoo Networks GMbH
+# Website: http://www.redoo-networks.com
 # 
 ################################################
 
 LICENSE
 1. The EventHandler License will be referred to as "The license" in the remainder of this text.
 
-2. This irrevocable, perpetual license covers versions 600.x of EventHandler.
+2. This irrevocable, perpetual license covers versions 7.x of EventHandler.
 
 3. The license holder is allowed to make modifications to the EventHandler sources but in no event 
    will the original copyright holders of this library be held responsible 
