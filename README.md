@@ -6,7 +6,7 @@ vtigerCRM 7 - EventHandler
 This Extension will implement an improved Version of Eventhandling in vtigerCRM 7.  
 **It isn't compatible to earlier/later vTigerCRM versions!**
 
-The downloads from the *release* directory are fully compatible with the ModuleManager and **must be installed at first**.   
+**The downloads from the *release* directory** are fully compatible with the ModuleManager and **must be installed at first**.   
 If you want to use this Extension, you have to enter some additional code lines into core files of vtigerCRM manually to implement the necessary Interfaces. **(See below)**
 
 The system is similar to the one of Wordpress and has filter and actions.  
